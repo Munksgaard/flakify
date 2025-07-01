@@ -73,7 +73,24 @@ if Code.ensure_loaded?(Igniter) do
     def igniter(igniter) do
       # Do your work here and return an updated igniter
       igniter
-      |> Igniter.add_warning("mix flakify is not yet implemented")
+      |> Igniter.Project.Config.configure(
+        "config.exs",
+        :tailwind,
+        [:path],
+        {:code,
+         Sourceror.parse_string!("""
+         System.get_env("MIX_TAILWIND_PATH")
+         """)}
+      )
+      |> Igniter.Project.Config.configure(
+        "config.exs",
+        :tailwind,
+        [:version_check],
+        {:code,
+         Sourceror.parse_string!("""
+         false
+         """)}
+      )
     end
   end
 else
