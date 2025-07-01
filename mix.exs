@@ -21,7 +21,7 @@ defmodule Flakify.MixProject do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
-      {:igniter, "~> 0.6", only: [:dev, :test]}
+      {:igniter, "~> 0.6", optional: true}
     ]
   end
 end
