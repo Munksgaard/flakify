@@ -91,6 +91,24 @@ if Code.ensure_loaded?(Igniter) do
          false
          """)}
       )
+      |> Igniter.Project.Config.configure(
+        "config.exs",
+        :esbuild,
+        [:path],
+        {:code,
+         Sourceror.parse_string!("""
+         System.get_env("MIX_ESBUILD_PATH")
+         """)}
+      )
+      |> Igniter.Project.Config.configure(
+        "config.exs",
+        :esbuild,
+        [:version_check],
+        {:code,
+         Sourceror.parse_string!("""
+         false
+         """)}
+      )
     end
   end
 else
