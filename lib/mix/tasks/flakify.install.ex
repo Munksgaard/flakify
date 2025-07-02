@@ -3,12 +3,12 @@ defmodule Mix.Tasks.Flakify.Install.Docs do
 
   @spec short_doc() :: String.t()
   def short_doc do
-    "A short description of your task"
+    "Modify your Phoenix project to work in a Nix flake development shell"
   end
 
   @spec example() :: String.t()
   def example do
-    "mix flakify --example arg"
+    "mix igniter_install flakify"
   end
 
   @spec long_doc() :: String.t()
@@ -16,17 +16,15 @@ defmodule Mix.Tasks.Flakify.Install.Docs do
     """
     #{short_doc()}
 
-    Longer explanation of your task
+    This task adds a `flake.nix` to your project with tailwind and esbuild
+    installed, and alters your tailwind and esbuild configuration to use the
+    versions from your Nix flake.
 
     ## Example
 
     ```sh
     #{example()}
     ```
-
-    ## Options
-
-    * `--example-option` or `-e` - Docs for your option
     """
   end
 end
