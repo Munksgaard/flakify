@@ -8,7 +8,7 @@ Elixir/Phoenix-project.
 To create a new Phoenix project that's already initialized with a Nix flake, run the following command:
 
 ```
-mix igniter.new flakify_test --install flakify@github:Munksgaard/flakify --with phx.new --with-args="--no-ecto"
+mix igniter.new flakify_test --install flakify --with phx.new --with-args="--no-ecto"
 ```
 
 This will:
@@ -27,7 +27,7 @@ phx.server` to run the Phoenix server using the flake development environment.
 In an existing project, you can run:
 
 ```
-mix igniter.install flakify@github:Munksgaard/flakify
+mix igniter.install flakify
 ```
 
 After running the installer, flakify will remove itself from your project
