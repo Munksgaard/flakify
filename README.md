@@ -23,3 +23,8 @@ This will:
 
 After performing the install, you should be able to run `nix develop -c mix
 phx.server` to run the Phoenix server using the flake development environment.
+
+## TODO
+
+ - [ ] Add option to also add a package definition to `flake.nix`, probably using `deps_nix`.
+ - [ ] Add option to specify whether tailwind and esbuild should actually be installed.
