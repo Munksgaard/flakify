@@ -1,4 +1,4 @@
-defmodule Mix.Tasks.FlakifyTest do
+defmodule Mix.Tasks.Flakify.InstallTest do
   use ExUnit.Case, async: true
   import Igniter.Test
 
@@ -6,7 +6,7 @@ defmodule Mix.Tasks.FlakifyTest do
     # generate a test project
     phx_test_project()
     # run our task
-    |> Igniter.compose_task("flakify", [])
+    |> Igniter.compose_task("flakify.install", [])
     # see tools in `Igniter.Test` for available assertions & helpers
     |> assert_creates("flake.nix")
     |> assert_has_patch("config/config.exs", """

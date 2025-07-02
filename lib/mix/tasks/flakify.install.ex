@@ -1,4 +1,4 @@
-defmodule Mix.Tasks.Flakify.Docs do
+defmodule Mix.Tasks.Flakify.Install.Docs do
   @moduledoc false
 
   @spec short_doc() :: String.t()
@@ -32,7 +32,7 @@ defmodule Mix.Tasks.Flakify.Docs do
 end
 
 if Code.ensure_loaded?(Igniter) do
-  defmodule Mix.Tasks.Flakify do
+  defmodule Mix.Tasks.Flakify.Install do
     @shortdoc "#{__MODULE__.Docs.short_doc()}"
 
     @moduledoc __MODULE__.Docs.long_doc()
@@ -137,7 +137,7 @@ if Code.ensure_loaded?(Igniter) do
     end
   end
 else
-  defmodule Mix.Tasks.Flakify do
+  defmodule Mix.Tasks.Flakify.Install do
     @shortdoc "#{__MODULE__.Docs.short_doc()} | Install `igniter` to use"
 
     @moduledoc __MODULE__.Docs.long_doc()
