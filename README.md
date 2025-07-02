@@ -37,3 +37,7 @@ dependencies.
 
  - [ ] Add option to also add a package definition to `flake.nix`, probably using `deps_nix`.
  - [ ] Add option to specify whether tailwind and esbuild should actually be installed.
+ - [ ] Add option to add an .envrc file for direnv
+ - [ ] Add option to specify the nixos/nixpkgs version to use
+ - [ ] Add option to specify which version of elixir/beam to use
+ - [ ] Add option to add a nixos module definition and/or systemd service definition
