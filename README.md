@@ -30,6 +30,9 @@ In an existing project, you can run:
 mix igniter.install flakify@github:Munksgaard/flakify
 ```
 
+After running the installer, flakify will remove itself from your project
+dependencies.
+
 ## TODO
 
  - [ ] Add option to also add a package definition to `flake.nix`, probably using `deps_nix`.
