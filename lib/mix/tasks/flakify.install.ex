@@ -134,6 +134,13 @@ if Code.ensure_loaded?(Igniter) do
           };
       }
       """)
+      |> then(fn igniter ->
+        if Igniter.Project.Deps.has_dep?(igniter, :flakify) do
+          Igniter.Project.Deps.remove_dep(igniter, :flakify)
+        else
+          igniter
+        end
+      end)
     end
   end
 else
