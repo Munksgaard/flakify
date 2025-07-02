@@ -45,6 +45,7 @@ defmodule Flakify.MixProject do
 
   defp docs do
     [
+      source_ref: "v#{@version}",
       source_url_pattern: "#{@scm_url}/blob/v#{@version}/%{path}#L%{line}",
       main: "readme",
       extras: ["README.md"]
