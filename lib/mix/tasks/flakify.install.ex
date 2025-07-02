@@ -124,7 +124,7 @@ if Code.ensure_loaded?(Igniter) do
               default = pkgs.mkShell {
                 packages =
                   (if pkgs.stdenv.isLinux then [ pkgs.inotify-tools ] else [ ]) ++
-                    [ pkgs.elixir pkgs.tailwindcss_4 pkgs.esbuild pkgs.go ];
+                    [ pkgs.elixir pkgs.tailwindcss_4 pkgs.esbuild ];
                 MIX_TAILWIND_PATH = "${pkgs.tailwindcss_4}/bin/tailwindcss";
                 MIX_ESBUILD_PATH = "${pkgs.esbuild}/bin/esbuild";
               };
