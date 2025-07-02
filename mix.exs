@@ -18,7 +18,7 @@ defmodule Flakify.MixProject do
         ],
         licenses: ["MIT"],
         links: %{"GitHub" => @scm_url},
-        files: ~w(lib mix.exs README.md)
+        files: ~w(lib mix.exs README.md CHANGELOG.md)
       ],
       source_url: @scm_url,
       docs: docs(),
@@ -48,7 +48,7 @@ defmodule Flakify.MixProject do
       source_ref: "v#{@version}",
       source_url_pattern: "#{@scm_url}/blob/v#{@version}/%{path}#L%{line}",
       main: "readme",
-      extras: ["README.md"]
+      extras: ["README.md", "CHANGELOG.md"]
     ]
   end
 end
