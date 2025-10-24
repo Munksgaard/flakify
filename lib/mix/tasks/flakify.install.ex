@@ -119,8 +119,8 @@ if Code.ensure_loaded?(Igniter) do
               inputs.nixpkgs.lib.genAttrs supportedSystems
               (system: f { pkgs = import inputs.nixpkgs { inherit system; }; });
             commonEnv = pkgs: {
-              MIX_TAILWIND_PATH = "${pkgs.tailwindcss_4}/bin/tailwindcss";
-              MIX_ESBUILD_PATH = "${pkgs.esbuild}/bin/esbuild";
+              MIX_TAILWIND_PATH = pkgs.lib.getExe pkgs.tailwindcss_4;
+              MIX_ESBUILD_PATH = pkgs.lib.getExe pkgs.esbuild;
             };
 
           in {
