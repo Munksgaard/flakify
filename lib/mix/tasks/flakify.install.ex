@@ -25,6 +25,11 @@ defmodule Mix.Tasks.Flakify.Install.Docs do
     ```sh
     #{example()}
     ```
+
+    ## Options
+
+    * `--package` - Include a package derivation for the Mix release build of the project (default). The package uses [deps_nix](https://hexdocs.pm/deps_nix/readme.html) to convert Mix dependencies to Nix derivations.
+    * `--no-package` - Do not include a package derivation.
     """
   end
 end
@@ -57,9 +62,9 @@ if Code.ensure_loaded?(Igniter) do
         # This ensures your option schema includes options from nested tasks
         composes: [],
         # `OptionParser` schema
-        schema: [],
+        schema: [package: :boolean],
         # Default values for the options in the `schema`
-        defaults: [],
+        defaults: [package: true],
         # CLI aliases
         aliases: [],
         # A list of options in the schema that are required
@@ -133,6 +138,8 @@ if Code.ensure_loaded?(Igniter) do
                 env = commonEnv pkgs;
               };
             });
+
+            #{if Keyword.get(igniter.args.options, :package), do: package_text(Igniter.Project.Application.app_name(igniter))}
           };
       }
       """)
@@ -143,6 +150,50 @@ if Code.ensure_loaded?(Igniter) do
           igniter
         end
       end)
+      |> maybe_add_deps_nix()
+    end
+
+    defp package_text(app_name) do
+      """
+      packages = forEachSupportedSystem ({ pkgs }: rec {
+              #{app_name} = let
+                mixNixDeps = pkgs.callPackages ./deps.nix { };
+                pname = "#{app_name}";
+                version = "0.0.1";
+              in (beam_pkgs pkgs).mixRelease {
+                inherit pname version mixNixDeps;
+                src = pkgs.lib.cleanSource ./.;
+                env = commonEnv pkgs;
+
+                postBuild = ''
+                  # As shown in
+                  # https://github.com/code-supply/nix-phoenix/blob/2ab9b2f63dd85d5d6a85d61bd4fc5c6d07f65643/flake-template/flake.nix#L62-L64
+                  ln -sfv ${mixNixDeps.heroicons} deps/heroicons
+
+                  mix do \\
+                    loadpaths --no-deps-check, \\
+                    assets.deploy --no-deps-check
+                '';
+
+                meta.mainProgram = "server";
+              };
+              default = #{app_name};
+            });
+      """
+    end
+
+    defp maybe_add_deps_nix(igniter) do
+      if Keyword.get(igniter.args.options, :package) do
+        igniter
+        |> then(fn igniter ->
+          Igniter.Project.Deps.add_dep(igniter, {:deps_nix, "~> 2.5"})
+        end)
+        |> then(&Igniter.apply_and_fetch_dependencies/1)
+        |> then(&Igniter.Project.TaskAliases.add_alias(&1, "deps.get", ["deps.get", "deps.nix"]))
+        |> then(&Igniter.add_task(&1, "deps.get"))
+      else
+        igniter
+      end
     end
   end
 else
