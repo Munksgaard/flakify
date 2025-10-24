@@ -1,7 +1,7 @@
 defmodule Flakify.MixProject do
   use Mix.Project
 
-  @version "0.2.0"
+  @version "0.3.0"
   @scm_url "https://github.com/Munksgaard/flakify"
   @elixir_requirement "~> 1.18"
 
