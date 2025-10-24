@@ -118,6 +118,10 @@ if Code.ensure_loaded?(Igniter) do
             forEachSupportedSystem = f:
               inputs.nixpkgs.lib.genAttrs supportedSystems
               (system: f { pkgs = import inputs.nixpkgs { inherit system; }; });
+            commonEnv = pkgs: {
+              MIX_TAILWIND_PATH = "${pkgs.tailwindcss_4}/bin/tailwindcss";
+              MIX_ESBUILD_PATH = "${pkgs.esbuild}/bin/esbuild";
+            };
 
           in {
             devShells = forEachSupportedSystem ({ pkgs }: {
@@ -125,8 +129,7 @@ if Code.ensure_loaded?(Igniter) do
                 packages =
                   (if pkgs.stdenv.isLinux then [ pkgs.inotify-tools ] else [ ]) ++
                     [ pkgs.elixir pkgs.tailwindcss_4 pkgs.esbuild ];
-                MIX_TAILWIND_PATH = "${pkgs.tailwindcss_4}/bin/tailwindcss";
-                MIX_ESBUILD_PATH = "${pkgs.esbuild}/bin/esbuild";
+                env = commonEnv pkgs;
               };
             });
           };
