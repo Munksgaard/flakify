@@ -123,12 +123,13 @@ if Code.ensure_loaded?(Igniter) do
               MIX_ESBUILD_PATH = pkgs.lib.getExe pkgs.esbuild;
             };
 
+            beam_pkgs = pkgs: pkgs.beam.packagesWith pkgs.beam.interpreters.erlang;
           in {
             devShells = forEachSupportedSystem ({ pkgs }: {
               default = pkgs.mkShell {
                 packages =
                   (if pkgs.stdenv.isLinux then [ pkgs.inotify-tools ] else [ ]) ++
-                    [ pkgs.elixir pkgs.tailwindcss_4 pkgs.esbuild ];
+                    [ (beam_pkgs pkgs).elixir pkgs.tailwindcss_4 pkgs.esbuild ];
                 env = commonEnv pkgs;
               };
             });
